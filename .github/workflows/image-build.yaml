@@ -1,0 +1,30 @@
+name: FBSim proxy build
+on:
+  push:
+    branches: [ "main" ]
+jobs:
+  build:
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build and push the FBSim proxy image
+      run: |
+        # Get the version from version.json
+        echo "[INFO] Getting proxy version from version.json"
+        PROXY_VERSION=$(
+          cat proxy/version.json | jq -r .version
+        );
+        echo "[DEBU] Package version: ${PROXY_VERSION}"
+        
+        # Build the FBSim proxy image
+        echo "[INFO] Building and pushing ghcr.io/whatsacomputertho/fbsim-proxy:v${PROXY_VERSION}"
+        docker login \
+          -u whatsacomputertho \
+          -p ${{ secrets.GITHUB_TOKEN }} \
+          ghcr.io/whatsacomputertho
+        docker build ./proxy \
+          -f ./proxy/Containerfile \
+          --tag ghcr.io/whatsacomputertho/fbsim-proxy:v${PROXY_VERSION}
+        docker push \
+          ghcr.io/whatsacomputertho/fbsim-proxy:v${PROXY_VERSION}
