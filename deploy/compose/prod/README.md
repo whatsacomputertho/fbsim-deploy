@@ -26,10 +26,7 @@ Steps for doing so are outlined as follows:
 2. Run the `acme-responder` image in the background, which we will use as a temporary webserver to respond to the certbot challenge
     ```sh
     # Run the acme-responder container
-    docker run -d -it \
-        -p 80:80 \
-        --volume ./data/certbot/www:/var/www/certbot
-        ghcr.io/whatsacomputertho/acme-responder:v1.0.0-alpha.1
+    docker run -d -it -p 80:80 --volume ./data/certbot/www:/var/www/certbot ghcr.io/whatsacomputertho/fbsim-acme-responder:v1.0.0-alpha.1
     
     # List running container images, check the logs to ensure healthy startup
     docker container ls
@@ -38,13 +35,12 @@ Steps for doing so are outlined as follows:
 3. Run the `certbot` image interactively in dry run mode, which will issue the challenge and tell us if the challenge is handled successfully without granting our signed certificate
     ```sh
     # Run the certbot container in dry run mode
-    docker run -it \
-        --volume ./data/certbot/www:/var/www/certbot \
-        --volume ./data/certbot/conf:/etc/letsencrypt \
-        certbot/certbot certonly \
-        -d ${YOUR_DOMAIN_NAME} \
-        --webroot-path /var/www/certbot \
-        --dry-run
+    # Select option 2
+    #     2: Saves the necessary validation files to a .well-known/acme-challenge/
+    #        directory within the nominated webroot path. A separate HTTP server must be
+    #        running and serving files from the webroot path. HTTP challenge only (wildcards
+    #        not supported). (webroot)
+    docker run -it --volume ./data/certbot/www:/var/www/certbot --volume ./data/certbot/conf:/etc/letsencrypt certbot/certbot certonly -d whatsacomputertho.com --webroot-path /var/www/certbot --dry-run
     ```
 4. Run the `certbot` image again without the `--dry-run` option to grant the certificates.  It will ask for additional user input which must be provided interactively.
 5. Stop the `acme-responder` container and prune all stale containers on the system
