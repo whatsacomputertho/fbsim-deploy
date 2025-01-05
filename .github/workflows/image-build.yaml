@@ -13,7 +13,7 @@ jobs:
         # Get the version from version.json
         echo "[INFO] Getting proxy version from version.json"
         PROXY_VERSION=$(
-          cat proxy/version.json | jq -r .version
+          cat build/proxy/version.json | jq -r .version
         );
         echo "[DEBU] Package version: ${PROXY_VERSION}"
         
@@ -23,8 +23,8 @@ jobs:
           -u whatsacomputertho \
           -p ${{ secrets.GITHUB_TOKEN }} \
           ghcr.io/whatsacomputertho
-        docker build ./proxy \
-          -f ./proxy/Containerfile \
+        docker build ./build/proxy \
+          -f ./build/proxy/Containerfile \
           --tag ghcr.io/whatsacomputertho/fbsim-proxy:v${PROXY_VERSION}
         docker push \
           ghcr.io/whatsacomputertho/fbsim-proxy:v${PROXY_VERSION}
@@ -34,7 +34,7 @@ jobs:
         # Get the version from version.json
         echo "[INFO] Getting acme-responder version from version.json"
         ACME_RESPONDER_VERSION=$(
-          cat acme-responder/version.json | jq -r .version
+          cat build/acme-responder/version.json | jq -r .version
         );
         echo "[DEBU] Package version: ${ACME_RESPONDER_VERSION}"
         
@@ -44,8 +44,8 @@ jobs:
           -u whatsacomputertho \
           -p ${{ secrets.GITHUB_TOKEN }} \
           ghcr.io/whatsacomputertho
-        docker build ./acme-responder \
-          -f ./acme-responder/Containerfile \
+        docker build ./build/acme-responder \
+          -f ./build/acme-responder/Containerfile \
           --tag ghcr.io/whatsacomputertho/fbsim-acme-responder:v${ACME_RESPONDER_VERSION}
         docker push \
           ghcr.io/whatsacomputertho/fbsim-acme-responder:v${ACME_RESPONDER_VERSION}
