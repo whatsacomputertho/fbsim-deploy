@@ -28,3 +28,24 @@ jobs:
           --tag ghcr.io/whatsacomputertho/fbsim-proxy:v${PROXY_VERSION}
         docker push \
           ghcr.io/whatsacomputertho/fbsim-proxy:v${PROXY_VERSION}
+    - uses: actions/checkout@v4
+    - name: Build and push the FBSim acme-responder image
+      run: |
+        # Get the version from version.json
+        echo "[INFO] Getting acme-responder version from version.json"
+        ACME_RESPONDER_VERSION=$(
+          cat acme-responder/version.json | jq -r .version
+        );
+        echo "[DEBU] Package version: ${ACME_RESPONDER_VERSION}"
+        
+        # Build the FBSim acme-responder image
+        echo "[INFO] Building and pushing ghcr.io/whatsacomputertho/fbsim-acme-responder:v${ACME_RESPONDER_VERSION}"
+        docker login \
+          -u whatsacomputertho \
+          -p ${{ secrets.GITHUB_TOKEN }} \
+          ghcr.io/whatsacomputertho
+        docker build ./acme-responder \
+          -f ./acme-responder/Containerfile \
+          --tag ghcr.io/whatsacomputertho/fbsim-acme-responder:v${ACME_RESPONDER_VERSION}
+        docker push \
+          ghcr.io/whatsacomputertho/fbsim-acme-responder:v${ACME_RESPONDER_VERSION}
