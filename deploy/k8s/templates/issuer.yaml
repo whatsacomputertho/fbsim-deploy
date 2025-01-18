@@ -1,0 +1,23 @@
+{{ if .Values.tls.enabled }}
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: "{{ .Values.metadata.name }}-letsencrypt-prod"
+  namespace: "{{ .Values.metadata.namespace }}"
+  labels:
+    app.kubernetes.io/name: "{{ .Values.metadata.name }}-letsencrypt-prod"
+    app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
+    app.kubernetes.io/component: certificate-issuer
+    app.kubernetes.io/part-of: "{{ .Values.metadata.name }}-fbsim"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  acme:
+    email: "{{ .Values.tls.email }}"
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: "{{ .Values.metadata.name }}-letsencrypt-prod"
+    solvers:
+    - http01:
+        ingress:
+          class: traefik
+{{ end }}

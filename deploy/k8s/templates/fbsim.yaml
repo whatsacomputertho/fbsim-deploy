@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ .Values.metadata.name }}-fbsim"
+  namespace: "{{ .Values.metadata.namespace }}"
+  labels:
+    app.kubernetes.io/name: "{{ .Values.metadata.name }}-fbsim"
+    app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
+    app.kubernetes.io/component: fullstack
+    app.kubernetes.io/part-of: "{{ .Values.metadata.name }}-fbsim"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "{{ .Values.metadata.name }}-fbsim"
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: "{{ .Values.metadata.name }}-fbsim"
+        app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
+        app.kubernetes.io/component: fullstack
+        app.kubernetes.io/part-of: "{{ .Values.metadata.name }}-fbsim"
+        app.kubernetes.io/managed-by: Helm
+    spec:
+      containers:
+        - name: fbsim-ui
+          image: "{{ .Values.spec.ui.registry }}/fbsim-ui:{{ .Chart.AppVersion }}"
+          env:
+            - name: FBSIM_UI_DOMAIN
+              value: "0.0.0.0"
+            - name: FBSIM_UI_PORT
+              value: "{{ .Values.spec.ui.port }}"
+            - name: FBSIM_API_HOST
+              value: "https://{{ .Values.spec.api.subdomain }}.{{ .Values.spec.domain }}"
+          ports:
+            - containerPort: {{ .Values.spec.ui.port }}
+              name: fbsim-ui
+        - name: fbsim-api
+          image: "{{ .Values.spec.api.registry }}/fbsim-api:{{ .Chart.AppVersion }}"
+          ports:
+            - containerPort: {{ .Values.spec.api.port }}
+              name: fbsim-api
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "{{ .Values.metadata.name }}-fbsim"
+  namespace: "{{ .Values.metadata.namespace }}"
+  labels:
+    app.kubernetes.io/name: "{{ .Values.metadata.name }}-fbsim"
+    app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
+    app.kubernetes.io/component: fullstack
+    app.kubernetes.io/part-of: "{{ .Values.metadata.name }}-fbsim"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  selector:
+    app.kubernetes.io/name: "{{ .Values.metadata.name }}-fbsim"
+  ports:
+    - name: fbsim-ui
+      protocol: TCP
+      port: {{ .Values.spec.ui.port }}
+      targetPort: {{ .Values.spec.ui.port }}
+    - name: fbsim-api
+      protocol: TCP
+      port: {{ .Values.spec.api.port }}
+      targetPort: {{ .Values.spec.api.port }}
