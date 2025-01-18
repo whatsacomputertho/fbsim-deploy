@@ -15,7 +15,7 @@ metadata:
     traefik.ingress.kubernetes.io/router.middlewares: default-redirect-https@kubernetescrd
 spec:
   rules:
-    - host: "{{ .Values.api.subdomain }}.{{ .Values.domain }}"
+    - host: "{{ .Values.spec.api.subdomain }}.{{ .Values.spec.domain }}"
       http:
         paths:
           - path: /
@@ -24,11 +24,11 @@ spec:
               service:
                 name: "{{ .Values.metadata.name }}-fbsim"
                 port:
-                  number: {{ .Values.api.port }}
+                  number: {{ .Values.spec.api.port }}
   tls:
     - secretName: "{{ .Values.metadata.name }}-fbsim-api-tls"
       hosts:
-        - "{{ .Values.api.subdomain }}.{{ .Values.domain }}"
+        - "{{ .Values.spec.api.subdomain }}.{{ .Values.spec.domain }}"
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -47,7 +47,7 @@ metadata:
     traefik.ingress.kubernetes.io/router.middlewares: default-redirect-https@kubernetescrd
 spec:
   rules:
-    - host: "{{ .Values.ui.subdomain }}.{{ .Values.domain }}"
+    - host: "{{ .Values.spec.ui.subdomain }}.{{ .Values.spec.domain }}"
       http:
         paths:
           - path: /
@@ -56,8 +56,8 @@ spec:
               service:
                 name: "{{ .Values.metadata.name }}-fbsim"
                 port:
-                  number: {{ .Values.ui.port }}
+                  number: {{ .Values.spec.ui.port }}
   tls:
     - secretName: "{{ .Values.metadata.name }}-fbsim-ui-tls"
       hosts:
-        - "{{ .Values.ui.subdomain }}.{{ .Values.domain }}"
+        - "{{ .Values.spec.ui.subdomain }}.{{ .Values.spec.domain }}"
