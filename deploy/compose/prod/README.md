@@ -1,4 +1,4 @@
-# Deploying FBSim in production
+# Deploying FBSim in production (compose)
 
 > Steps to deploy the FBSim application in production using docker-compose
 

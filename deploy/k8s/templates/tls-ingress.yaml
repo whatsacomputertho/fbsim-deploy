@@ -11,7 +11,7 @@ metadata:
     app.kubernetes.io/managed-by: Helm
   annotations:
     spec.ingressClassName: traefik
-    cert-manager.io/cluster-issuer: "{{ .Values.metadata.name }}-letsencrypt-prod"
+    cert-manager.io/issuer: "{{ .Values.metadata.name }}-letsencrypt-prod"
     traefik.ingress.kubernetes.io/router.middlewares: "{{ .Values.metadata.namespace }}-{{ .Values.metadata.name }}-redirect-https@kubernetescrd"
 spec:
   rules:
@@ -43,7 +43,7 @@ metadata:
     app.kubernetes.io/managed-by: Helm
   annotations:
     spec.ingressClassName: traefik
-    cert-manager.io/cluster-issuer: "{{ .Values.metadata.name }}-letsencrypt-prod"
+    cert-manager.io/issuer: "{{ .Values.metadata.name }}-letsencrypt-prod"
     traefik.ingress.kubernetes.io/router.middlewares: "{{ .Values.metadata.namespace }}-{{ .Values.metadata.name }}-redirect-https@kubernetescrd"
 spec:
   rules:
