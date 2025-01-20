@@ -1,0 +1,24 @@
+apiVersion: v2
+name: fbsim
+description: American football simulator
+type: application
+
+# Chart version
+#
+# Increment this version on each time the chart changes
+version: v1.0.0
+
+# Application version
+#
+# Increment this version each time the underlying application changes
+appVersion: v1.0.0-alpha.1
+
+# Dependencies
+#
+# Dependencies of the FBSim deployment
+dependencies:
+  # Cert manager is used to issue TLS certificates for the FBSim API and UI
+  - name: cert-manager
+    version: "v1.16.3"
+    repository: https://charts.jetstack.io
+    condition: tls.enabled

@@ -1,0 +1,57 @@
+metadata:
+  # Instance name
+  #
+  # The name assigned to this instance
+  # If multiple instances, this must be unique
+  name: fbsim
+
+  # Namespace
+  #
+  # The namespace in which this instance is deployed
+  # The namespace will be created by the chart (see templates/namespace.yaml)
+  namespace: fbsim
+spec:
+  # Domain
+  #
+  # The domain behind which the application will be exposed
+  domain: whatsacomputertho.com
+
+  tls:
+    # TLS enabled
+    #
+    # Whether to enable TLS certification
+    # This installs cert-manager
+    enabled: true
+
+    # TLS config
+    #
+    # The email associated with the issued certificates
+    email: your@email.com
+
+  ui:
+    # UI image registry
+    #
+    # The registry from which to pull the fbsim-ui image
+    # The tag is derived from the chart's AppVersion
+    registry: ghcr.io/whatsacomputertho
+
+    # UI server config
+    #
+    # The subdomain behind which to expose the FBSim UI
+    # The internal port number behind which to expose the FBSim UI
+    subdomain: fbsim
+    port: 8081
+
+  api:
+    # API image registry
+    #
+    # The registry from which to pull the fbsim-ui image
+    # The tag is derived from the chart's AppVersion
+    registry: ghcr.io/whatsacomputertho
+
+    # API server config
+    #
+    # The subdomain behind which to expose the FBSim UI
+    # The internal port number behind which to expose the FBSim UI
+    subdomain: api.fbsim
+    port: 8080

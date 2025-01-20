@@ -1,0 +1,63 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: "{{ .Values.metadata.name }}-fbsim-api-tls-ingress"
+  namespace: "{{ .Values.metadata.namespace }}"
+  labels:
+    app.kubernetes.io/name: "{{ .Values.metadata.name }}-fbsim-api-tls-ingress"
+    app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
+    app.kubernetes.io/component: public-api-endpoint
+    app.kubernetes.io/part-of: "{{ .Values.metadata.name }}-fbsim"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    spec.ingressClassName: traefik
+    cert-manager.io/issuer: "{{ .Values.metadata.name }}-letsencrypt-prod"
+    traefik.ingress.kubernetes.io/router.middlewares: "{{ .Values.metadata.namespace }}-{{ .Values.metadata.name }}-redirect-https@kubernetescrd"
+spec:
+  rules:
+    - host: "{{ .Values.spec.api.subdomain }}.{{ .Values.spec.domain }}"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: "{{ .Values.metadata.name }}-fbsim"
+                port:
+                  number: {{ .Values.spec.api.port }}
+  tls:
+    - secretName: "{{ .Values.metadata.name }}-fbsim-api-tls"
+      hosts:
+        - "{{ .Values.spec.api.subdomain }}.{{ .Values.spec.domain }}"
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: "{{ .Values.metadata.name }}-fbsim-ui-tls-ingress"
+  namespace: "{{ .Values.metadata.namespace }}"
+  labels:
+    app.kubernetes.io/name: "{{ .Values.metadata.name }}-fbsim-ui-tls-ingress"
+    app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
+    app.kubernetes.io/component: public-ui-endpoint
+    app.kubernetes.io/part-of: "{{ .Values.metadata.name }}-fbsim"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    spec.ingressClassName: traefik
+    cert-manager.io/issuer: "{{ .Values.metadata.name }}-letsencrypt-prod"
+    traefik.ingress.kubernetes.io/router.middlewares: "{{ .Values.metadata.namespace }}-{{ .Values.metadata.name }}-redirect-https@kubernetescrd"
+spec:
+  rules:
+    - host: "{{ .Values.spec.ui.subdomain }}.{{ .Values.spec.domain }}"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: "{{ .Values.metadata.name }}-fbsim"
+                port:
+                  number: {{ .Values.spec.ui.port }}
+  tls:
+    - secretName: "{{ .Values.metadata.name }}-fbsim-ui-tls"
+      hosts:
+        - "{{ .Values.spec.ui.subdomain }}.{{ .Values.spec.domain }}"
