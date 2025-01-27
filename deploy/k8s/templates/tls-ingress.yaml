@@ -5,7 +5,7 @@ metadata:
   namespace: "{{ .Values.metadata.namespace }}"
   labels:
     app.kubernetes.io/name: "{{ .Values.metadata.name }}-fbsim-api-tls-ingress"
-    app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
+    app.kubernetes.io/version: "{{ .Chart.Version }}"
     app.kubernetes.io/component: public-api-endpoint
     app.kubernetes.io/part-of: "{{ .Values.metadata.name }}-fbsim"
     app.kubernetes.io/managed-by: Helm
@@ -37,7 +37,7 @@ metadata:
   namespace: "{{ .Values.metadata.namespace }}"
   labels:
     app.kubernetes.io/name: "{{ .Values.metadata.name }}-fbsim-ui-tls-ingress"
-    app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
+    app.kubernetes.io/version: "{{ .Chart.Version }}"
     app.kubernetes.io/component: public-ui-endpoint
     app.kubernetes.io/part-of: "{{ .Values.metadata.name }}-fbsim"
     app.kubernetes.io/managed-by: Helm

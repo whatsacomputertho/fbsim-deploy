@@ -1,6 +1,6 @@
 services:
   proxy:
-    image: ghcr.io/whatsacomputertho/fbsim-proxy:${FBSIM_PROXY_VERSION:-v1.0.0-alpha.1}
+    image: ghcr.io/whatsacomputertho/fbsim-proxy:${FBSIM_PROXY_VERSION:-v1.0.0-alpha.2}
     ports:
       - 443:443
       - 80:80

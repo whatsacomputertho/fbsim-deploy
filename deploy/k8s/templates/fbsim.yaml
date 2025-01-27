@@ -5,7 +5,7 @@ metadata:
   namespace: "{{ .Values.metadata.namespace }}"
   labels:
     app.kubernetes.io/name: "{{ .Values.metadata.name }}-fbsim"
-    app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
+    app.kubernetes.io/version: "{{ .Chart.Version }}"
     app.kubernetes.io/component: fullstack
     app.kubernetes.io/part-of: "{{ .Values.metadata.name }}-fbsim"
     app.kubernetes.io/managed-by: Helm
@@ -18,14 +18,14 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: "{{ .Values.metadata.name }}-fbsim"
-        app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
+        app.kubernetes.io/version: "{{ .Chart.Version }}"
         app.kubernetes.io/component: fullstack
         app.kubernetes.io/part-of: "{{ .Values.metadata.name }}-fbsim"
         app.kubernetes.io/managed-by: Helm
     spec:
       containers:
         - name: fbsim-ui
-          image: "{{ .Values.spec.ui.registry }}/fbsim-ui:{{ .Chart.AppVersion }}"
+          image: "{{ .Values.spec.ui.registry }}/fbsim-ui:{{ .Values.spec.ui.version }}"
           env:
             - name: FBSIM_UI_DOMAIN
               value: "0.0.0.0"
@@ -37,7 +37,7 @@ spec:
             - containerPort: {{ .Values.spec.ui.port }}
               name: fbsim-ui
         - name: fbsim-api
-          image: "{{ .Values.spec.api.registry }}/fbsim-api:{{ .Chart.AppVersion }}"
+          image: "{{ .Values.spec.api.registry }}/fbsim-api:{{ .Values.spec.api.version }}"
           ports:
             - containerPort: {{ .Values.spec.api.port }}
               name: fbsim-api
@@ -49,7 +49,7 @@ metadata:
   namespace: "{{ .Values.metadata.namespace }}"
   labels:
     app.kubernetes.io/name: "{{ .Values.metadata.name }}-fbsim"
-    app.kubernetes.io/version: "{{ .Chart.AppVersion }}"
+    app.kubernetes.io/version: "{{ .Chart.Version }}"
     app.kubernetes.io/component: fullstack
     app.kubernetes.io/part-of: "{{ .Values.metadata.name }}-fbsim"
     app.kubernetes.io/managed-by: Helm

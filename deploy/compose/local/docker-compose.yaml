@@ -1,6 +1,6 @@
 services:
   api:
-    image: ghcr.io/whatsacomputertho/fbsim-api:${FBSIM_API_VERSION:-v1.0.0-alpha.1}
+    image: ghcr.io/whatsacomputertho/fbsim-api:${FBSIM_API_VERSION:-v1.0.0-alpha.2}
     ports:
       - "8080:8080"
   ui:
