@@ -41,7 +41,7 @@ Steps for doing so are outlined as follows:
     #        directory within the nominated webroot path. A separate HTTP server must be
     #        running and serving files from the webroot path. HTTP challenge only (wildcards
     #        not supported). (webroot)
-    docker run -it --volume ./data/certbot/www:/var/www/certbot --volume ./data/certbot/conf:/etc/letsencrypt certbot/certbot certonly -d whatsacomputertho.com --webroot-path /var/www/certbot --dry-run
+    docker run -it --volume ./data/certbot/www:/var/www/certbot --volume ./data/certbot/conf:/etc/letsencrypt certbot/certbot certonly -d ${FBSIM_DOMAIN} --webroot-path /var/www/certbot --dry-run
     ```
 4. Run the `certbot` image again without the `--dry-run` option to grant the certificates.  It will ask for additional user input which must be provided interactively.
 5. Stop the `acme-responder` container and prune all stale containers on the system
