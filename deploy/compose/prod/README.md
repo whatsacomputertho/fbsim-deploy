@@ -27,7 +27,7 @@ Steps for doing so are outlined as follows:
     ```sh
     # Run the acme-responder container
     export FBSIM_DOMAIN="my.domain.com" # Set to your domain
-    docker run -d -it -p 80:80 --env FBSIM_DOMAIN="${FBSIM_DOMAIN}" --volume ./data/certbot/www:/var/www/certbot ghcr.io/whatsacomputertho/fbsim-acme-responder:v1.0.0-alpha.1
+    docker run -d -it -p 80:80 --env FBSIM_DOMAIN="${FBSIM_DOMAIN}" --volume ./data/certbot/www:/var/www/certbot ghcr.io/whatsacomputertho/fbsim-acme-responder:v1.0.0-alpha.2
     
     # List running container images, check the logs to ensure healthy startup
     docker container ls
