@@ -26,7 +26,8 @@ Steps for doing so are outlined as follows:
 2. Run the `acme-responder` image in the background, which we will use as a temporary webserver to respond to the certbot challenge
     ```sh
     # Run the acme-responder container
-    docker run -d -it -p 80:80 --volume ./data/certbot/www:/var/www/certbot ghcr.io/whatsacomputertho/fbsim-acme-responder:v1.0.0-alpha.1
+    export FBSIM_DOMAIN="my.domain.com" # Set to your domain
+    docker run -d -it -p 80:80 --env FBSIM_DOMAIN="${FBSIM_DOMAIN}" --volume ./data/certbot/www:/var/www/certbot ghcr.io/whatsacomputertho/fbsim-acme-responder:v1.0.0-alpha.1
     
     # List running container images, check the logs to ensure healthy startup
     docker container ls

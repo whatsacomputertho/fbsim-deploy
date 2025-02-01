@@ -11,7 +11,7 @@ version: v1.0.0
 # Application version
 #
 # Increment this version each time the underlying application changes
-appVersion: v1.0.0-alpha.1
+appVersion: v1.0.0-alpha.2
 
 # Dependencies
 #

@@ -34,7 +34,7 @@ spec:
     # The registry from which to pull the fbsim-ui image
     # The version of the image (image tag) to pull
     registry: ghcr.io/whatsacomputertho
-    version: v1.0.0-alpha.1
+    version: v1.0.0-alpha.2
 
     # UI server config
     #
@@ -49,7 +49,7 @@ spec:
     # The registry from which to pull the fbsim-ui image
     # The version of the image (image tag) to pull
     registry: ghcr.io/whatsacomputertho
-    version: v1.0.0-alpha.2
+    version: v1.0.0-alpha.3
 
     # API server config
     #
