@@ -4,14 +4,16 @@ services:
     ports:
       - 443:443
       - 80:80
+    environment:
+      - FBSIM_DOMAIN=${FBSIM_DOMAIN:-whatsacomputertho.com}
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
   api:
-    image: ghcr.io/whatsacomputertho/fbsim-api:${FBSIM_API_VERSION:-v1.0.0-alpha.1}
+    image: ghcr.io/whatsacomputertho/fbsim-api:${FBSIM_API_VERSION:-v1.0.0-alpha.3}
     ports:
       - "8080:8080"
   ui:
-    image: ghcr.io/whatsacomputertho/fbsim-ui:${FBSIM_UI_VERSION:-v1.0.0-alpha.1}
+    image: ghcr.io/whatsacomputertho/fbsim-ui:${FBSIM_UI_VERSION:-v1.0.0-alpha.2}
     ports:
       - "8081:8081"
     environment:
