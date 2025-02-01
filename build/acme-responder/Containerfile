@@ -1,8 +1,4 @@
 FROM nginx:latest
 COPY nginx.conf /opt/fbsim/template.nginx.conf
 EXPOSE 443 80
-CMD [
-    "/bin/bash",
-    "-c",
-    "cat /opt/fbsim/template.nginx.conf | envsubst '${FBSIM_DOMAIN}' > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
-]
+CMD ["/bin/bash","-c","cat /opt/fbsim/template.nginx.conf | envsubst '${FBSIM_DOMAIN}' > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"]
